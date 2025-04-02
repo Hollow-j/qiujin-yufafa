@@ -72,31 +72,37 @@ export default function SalesDashboard() {
     }));
   };
 
-  const handleAddRecord = () => {
-    const updatedRecord = { date: selectedDate, 
-                           meituanYFF: Number(newRecord.meituanYFF) || 0, // 提交时转换
-                           ...newRecord };
-    const newData = [...data];
-    const existingIndex = newData.findIndex(item => item.date === selectedDate);
-    
-    if (existingIndex >= 0) {
-      newData[existingIndex] = updatedRecord;
-    } else {
-      newData.push(updatedRecord);
-    }
-    
-    // 保存到Firebase
-    set(ref(db, 'salesData'), newData);
-    
-    // 重置表单
-    setNewRecord({
-      meituanYFF: 0,
-      meituanQJC: 0,
-      elemeYFF: 0,
-      elemeQJC: 0,
-      kezhilian: 0
-    });
+const handleAddRecord = () => {
+  const updatedRecord = { 
+    date: selectedDate, 
+    meituanYFF: Number(newRecord.meituanYFF) || 0, 
+    meituanQJC: Number(newRecord.meituanQJC) || 0,
+    elemeYFF: Number(newRecord.elemeYFF) || 0,
+    elemeQJC: Number(newRecord.elemeQJC) || 0,
+    kezhilian: Number(newRecord.kezhilian) || 0
   };
+
+  const newData = [...data];
+  const existingIndex = newData.findIndex(item => item.date === selectedDate);
+  
+  if (existingIndex >= 0) {
+    newData[existingIndex] = updatedRecord;
+  } else {
+    newData.push(updatedRecord);
+  }
+
+  // 保存到Firebase
+  set(ref(db, 'salesData'), newData);
+    
+  // 重置表单
+  setNewRecord({
+    meituanYFF: 0,
+    meituanQJC: 0,
+    elemeYFF: 0,
+    elemeQJC: 0,
+    kezhilian: 0
+  });
+};
 
   const exportMonthlyToExcel = async () => {
     const [year, month] = selectedDate.split('-').slice(0, 2);
