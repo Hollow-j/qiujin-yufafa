@@ -68,12 +68,14 @@ export default function SalesDashboard() {
     const { name, value } = e.target;
     setNewRecord(prev => ({
       ...prev,
-      [name]: Number(value) || 0
+      [name]: value === "" ? "" : Number(value) // 保留空字符串
     }));
   };
 
   const handleAddRecord = () => {
-    const updatedRecord = { date: selectedDate, ...newRecord };
+    const updatedRecord = { date: selectedDate, 
+                           meituanYFF: Number(newRecord.meituanYFF) || 0, // 提交时转换
+                           ...newRecord };
     const newData = [...data];
     const existingIndex = newData.findIndex(item => item.date === selectedDate);
     
