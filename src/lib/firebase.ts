@@ -16,7 +16,6 @@ const firebaseConfig = {
 
 // 初始化Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getDatabase(app); // 添加这行
 
 export { db, ref, set, onValue }; // 确保导出这些方法
